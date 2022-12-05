@@ -1,6 +1,6 @@
-import { gql,useQuery } from '@apollo/client';
-import React from 'react';
-import { ActivityIndicator, StyleSheet, FlatList } from 'react-native';
+import { gql,useLazyQuery,useQuery } from '@apollo/client';
+import React, { useState } from 'react';
+import { ActivityIndicator, StyleSheet, FlatList , TextInput, Button} from 'react-native';
 import BookItem from '../components/BookItem';
 
 import EditScreenInfo from '../components/EditScreenInfo';
@@ -43,10 +43,25 @@ const query = gql`
 
 
 export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'>) {
-  const {data,loading,error}= useQuery(query,{variables:{q:"React Nativequery"}});
+
+  const [search, setSearch] = useState('');
+
+  //if you want the search to be dynamic
+  //const {data,loading,error}= useQuery(query,{variables:{q:search}});
+
+  // confirm the search when the user presses the search button
+  const [runQuery, { data, loading, error }] = useLazyQuery(query);
+  
   console.log(data);
   return (
     <View style={styles.container}>
+
+      <View style={styles.header}>
+        <TextInput placeholder='Search ...' style={styles.input}  value={search}  onChangeText={setSearch} />
+        <Button title='Search' onPress={() => runQuery({ variables: { q: search } })}/>
+
+      </View>
+
       {loading && <ActivityIndicator   />}
       {error && (
         <View>
@@ -62,7 +77,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
             title: item.volumeInfo.title,
             image: item.volumeInfo.imageLinks?.thumbnail,
             authors: item.volumeInfo.authors,
-            isbn: item.volumeInfo.industryIdentifiers[0].identifier,
+            isbn: item.volumeInfo.industryIdentifiers?.[0].identifier,
       }}
     />
   )}
@@ -87,4 +102,19 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  input: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "gainsboro",
+    borderRadius: 5,
+    padding: 10,
+  },  
 });
+function runQuery(arg0: { variables: { q: string; }; }): void {
+  throw new Error('Function not implemented.');
+}
+
