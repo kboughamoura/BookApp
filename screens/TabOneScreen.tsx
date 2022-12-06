@@ -54,7 +54,7 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
   const [provider,setProvider] = useState<"googleBooksSearch" | "openLibrarySearch">("googleBooksSearch");
 
   
-  const parseBook = (item) => {
+  const parseBook = (item: { volumeInfo: { title: any; imageLinks: { thumbnail: any; }; authors: any; industryIdentifiers: { identifier: any; }[]; }; title: any; author_name: any; cover_edition_key: any; isbn: any[]; }) => {
     if (provider === "googleBooksSearch") {
       return {
         title: item.volumeInfo.title,
@@ -71,7 +71,6 @@ export default function TabOneScreen({ navigation }: RootTabScreenProps<'TabOne'
       };
     }
   };
-
   return (
     <View style={styles.container}>
 

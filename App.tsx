@@ -5,6 +5,8 @@ import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
+import MyBooksProvider from './context/MyBooksProvider';
+
 //import the APOLLO Client
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 
@@ -33,7 +35,9 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <ApolloProvider client={client} >
-        <Navigation colorScheme={colorScheme} />
+          <MyBooksProvider>
+            <Navigation colorScheme={colorScheme} />
+        </MyBooksProvider>
         <StatusBar />
         </ApolloProvider>
       </SafeAreaProvider>
