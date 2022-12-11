@@ -3,6 +3,7 @@ import React from "react";
 import { useMyBooks } from "../context/MyBooksProvider";
 import Colors from "../constants/Colors";
 
+
 type BookItemProps = {
   book: Book;
 };
@@ -23,9 +24,10 @@ const BookItem = ({ book }: BookItemProps) => {
           style={[styles.button, saved ? { backgroundColor: "lightgray" } : {}]}
           onPress={() => onToggleSaved(book)}
         >
-          <Text style={styles.buttonText}>
+          <Text style={styles.buttonText} >
             {saved ? "Remove from Favoris" : "Add to Favoris"}
           </Text>
+          
         </Pressable>
       </View>
     </View>

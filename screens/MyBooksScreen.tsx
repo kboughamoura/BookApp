@@ -10,7 +10,7 @@ import { Text, View } from '../components/Themed';
 
 import {  useMyBooks } from '../context/MyBooksProvider';
 
-export default function TabTwoScreen() {
+export default function MyBooksScreen() {
 
   // call the personal Books context
  // const {test}= useMyBooks()
